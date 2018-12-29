@@ -3,7 +3,12 @@ var router = express.Router();
 
 /* GET message. */
 router.get('/', function(req, res, next) {
-  res.send('this is a start');
+  if (req.query.input)
+    res.json({
+      value: req.query.input
+    })
+  else
+    res.send('this is a start');
 });
 
 module.exports = router;
