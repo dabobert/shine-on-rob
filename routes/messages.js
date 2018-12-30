@@ -10,7 +10,7 @@ use restclient to get drata from shine test api
 */
 
 
-
+const { User } = require('../sequelize')
 var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
@@ -23,12 +23,26 @@ router.get('/', function(req, res, next) {
 
 
 
+
+
+User.findOne({
+  where: { name: 'john' },
+  // order: ['id', 'DESC'],
+  attributes: ['id', ['name', 'goal']]
+}).then(user => {
+  console.log(user);
+    eval(pry.it)
+})
+
+
+
+
 /*
   Because this app is so simple we are passing user & goal, rathet than the user id.  This is also because
   for the majority of the app, the data is in memory and not saved yet
 */
 router.post('/', function(req, res, next) {
-  // eval(pry.it
+  // eval(pry.it)
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
   let name = req.body.name;
