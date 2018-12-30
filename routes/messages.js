@@ -19,27 +19,31 @@ router.post('/', function(req, res, next) {
   switch(req.body.state) {
     case "greetings":
       res.json({ messsage: "FIX THIS ASAP!!!!!! Greetings!", next_state: "nameLookup" })
+      break;
     case "nameLookup":
       if (false)
         res.json({
-          messsage: "Hi {name}! Welcome back! you said before you wanted to work on: {goal}. What do you want to work on now?",
+          messsage: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
           name: name,
           goal: goal,
           next_state: "goalLookup"
         });
       else
         res.json({
-          messsage: "Hi, {name}! What's one thing you want to work on?",
+          messsage: `Hi, ${name} Whats one thing you want to work on?`,
           name: name,
           next_state: "goalLookup"
-        })
+        });
       break;
     case "goalLookup":
       res.json({
-        message: "So you want to work on {goal}. Does that sound right, {name}?",
+        message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
         name: name,
-        goal: goal,
-      })
+        goal: goal
+      });
+      break;
+    case ""
+    case 
     // case undefined:
     //   res.json({ messsage: "I'm confused" },
     //     name: name,
@@ -47,7 +51,7 @@ router.post('/', function(req, res, next) {
     //   );
     //   break;
     default: 
-      res.json({ messsage: "I got confused let's start over. What's your name", next_state: "nameLookup"  })
+      res.json({ messsage: "I got confused lets start over. Whats your name", next_state: "nameLookup"  })
   }
 });
 
