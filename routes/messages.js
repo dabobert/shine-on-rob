@@ -2,7 +2,7 @@
 To do:
 utilize sequlize
 create greeter class
-use restclient to get drata from shine test api
+use restclient to get data from shine test api
   curl -X POST \
      -H "Content-Type: application/json" \
      -d '{"goal":"be more joyful"}' \
@@ -16,15 +16,6 @@ var router = express.Router();
 var pry = require('pryjs')
 
 
-/* GET message. */
-router.get('/', function(req, res, next) {
-  res.send('you must "post" a request');
-});
-
-
-
-
-
 User.findOne({
   where: { name: 'john' },
   // order: ['id', 'DESC'],
@@ -35,6 +26,18 @@ User.findOne({
 })
 
 
+
+router.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
+
+/* GET message. */
+router.get('/', function(req, res, next) {
+  res.send('you must "post" a request');
+});
 
 
 /*
