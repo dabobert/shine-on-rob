@@ -52,16 +52,14 @@ export default class App extends Component {
         input: this.state.input
       }
     })
-    .then(function (response) {
+    .then((response) => {
+      console.log(this)
       this.setState({
-        incomingMessage: "response.data.message",
-        assm_state: "response.data.nextState"
+        incomingMessage: response.data.message,
+        assm_state: response.data.nextState
       })
-      // console.log("We did it!")
-      // console.log(response.data.message)
-      // console.log(response);
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
     });
     // console.log(this.state.input)
