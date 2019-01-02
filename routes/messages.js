@@ -54,19 +54,19 @@ router.post('/', function(req, res, next) {
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
   switch(req.body.state) {
     case "greetings":
-      res.json({ messsage: "FIX THIS ASAP!!!!!! Greetings!", nextState: "nameLookup" })
+      res.json({ message: "FIX THIS ASAP!!!!!! Greetings!", nextState: "nameLookup" })
       break;
     case "nameLookup":
       if (false)
         res.json({
-          messsage: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
+          message: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
           name: name,
           goal: goal,
           nextState: "goalLookup"
         });
       else
         res.json({
-          messsage: `Hi, ${name} Whats one thing you want to work on?`,
+          message: `Hi, ${name} Whats one thing you want to work on?`,
           name: name,
           nextState: "goalLookup"
         });
@@ -85,20 +85,20 @@ router.post('/', function(req, res, next) {
         // save to the db
         // fetch the goal
         res.json({
-          messsage: `Great! Heres a daily dose of Shine to get you started {contentFromAPi}`,
+          message: `Great! Heres a daily dose of Shine to get you started {contentFromAPi}`,
           name: name,
           goal: goal,
           nextState: "complete"
         })
       else
         res.json({
-          messsage: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
+          message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
           name: name,
           nextState: "goalLookup"
         });
       break;
     default: 
-      res.json({ messsage: "I got confused lets start over. Whats your name", nextState: "nameLookup"  })
+      res.json({ message: "I got confused lets start over. Whats your name", nextState: "nameLookup"  })
   }
 });
 
