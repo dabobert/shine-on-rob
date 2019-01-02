@@ -8,12 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:client": "tar --exclude='./build' -zcvf ./build/se-test.tar.gz ./",
     "start:server": "node ./bin/www",
-    "client:start": "react-scripts start",
+    "client:start": "PORT=3006 react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test",
     "client:eject": "react-scripts eject"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
