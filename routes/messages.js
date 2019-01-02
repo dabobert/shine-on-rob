@@ -31,7 +31,7 @@ User.findOne({
   attributes: ['id', ['name', 'goal']]
 }).then(user => {
   console.log(user);
-    eval(pry.it)
+    // eval(pry.it)
 })
 
 
