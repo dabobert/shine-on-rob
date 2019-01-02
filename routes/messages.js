@@ -52,7 +52,7 @@ router.post('/', function(req, res, next) {
   let goal = req.body.goal;
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
-  switch(req.body.state) {
+  switch(req.body.aasm_state) {
     case "greetings":
       res.json({ message: "FIX THIS ASAP!!!!!! Greetings!", nextState: "nameLookup" })
       break;

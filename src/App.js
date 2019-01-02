@@ -35,7 +35,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { incomingMessage: '', input: '', assm_state: '' };
+    this.state = { incomingMessage: '', input: '', aasm_state: '' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -49,14 +49,14 @@ export default class App extends Component {
   handleClick(event) {
     axios.post('/messages', {
       params: {
-        input: this.state.input
+        input: this.state.input,
+        aasm_state: this.state.aasm_state
       }
     })
     .then((response) => {
-      console.log(this)
       this.setState({
         incomingMessage: response.data.message,
-        assm_state: response.data.nextState
+        aasm_state: response.data.nextState
       })
     })
     .catch((error) => {
@@ -77,7 +77,15 @@ export default class App extends Component {
             type="text"
             placeholder="User Response"
           />
-          <input name="stateField" type="text" />
+          
+          <Input
+            name="aasm_state"
+            value={this.state.aasm_state}
+            type="text"
+            placeholder="state goes here"
+          />
+
+
           <Button onClick={this.handleClick}>Send</Button>
         </UserInputWrapper>
       </Wrapper>
