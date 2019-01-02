@@ -35,7 +35,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { incomingMessage: '', input: '' };
+    this.state = { incomingMessage: '', input: '', assm_state: '' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -47,13 +47,19 @@ export default class App extends Component {
   }
 
   handleClick(event) {
-    axios.post('http://localhost:3000/messages', {
+    axios.post('/messages', {
       params: {
         input: this.state.input
       }
     })
     .then(function (response) {
-      console.log(response);
+      this.setState({
+        incomingMessage: "response.data.message",
+        assm_state: "response.data.nextState"
+      })
+      // console.log("We did it!")
+      // console.log(response.data.message)
+      // console.log(response);
     })
     .catch(function (error) {
       console.log(error);
@@ -73,7 +79,7 @@ export default class App extends Component {
             type="text"
             placeholder="User Response"
           />
-          <input type="text" />
+          <input name="stateField" type="text" />
           <Button onClick={this.handleClick}>Send</Button>
         </UserInputWrapper>
       </Wrapper>
