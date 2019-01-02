@@ -50,9 +50,11 @@ router.post('/', function(req, res, next) {
   // the goal should be joy, not JoY or joy!!!!!!!!!
   let name = req.body.name;
   let goal = req.body.goal;
+  console.log(req.body)
+
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
-  switch(req.body.aasm_state) {
+  switch(req.body.params.aasm_state) {
     case "greetings":
       res.json({ message: "FIX THIS ASAP!!!!!! Greetings!", nextState: "nameLookup" })
       break;
@@ -65,6 +67,7 @@ router.post('/', function(req, res, next) {
           nextState: "goalLookup"
         });
       else
+        name = req.body.input;
         res.json({
           message: `Hi, ${name} Whats one thing you want to work on?`,
           name: name,

@@ -35,7 +35,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { incomingMessage: '', input: '', aasm_state: '' };
+    this.state = { incomingMessage: '', input: '', aasm_state: '', name: '', goal: 'greetings' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -54,6 +54,7 @@ export default class App extends Component {
       }
     })
     .then((response) => {
+      console.log(response.data)
       this.setState({
         incomingMessage: response.data.message,
         aasm_state: response.data.nextState
@@ -62,7 +63,6 @@ export default class App extends Component {
     .catch((error) => {
       console.log(error);
     });
-    // console.log(this.state.input)
   }
 
   render() {
@@ -80,10 +80,11 @@ export default class App extends Component {
           
           <Input
             name="aasm_state"
-            value={this.state.aasm_state}
+            defaultValue={this.state.aasm_state}
             type="text"
             placeholder="state goes here"
           />
+
 
 
           <Button onClick={this.handleClick}>Send</Button>
