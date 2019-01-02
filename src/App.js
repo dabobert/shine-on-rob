@@ -4,6 +4,8 @@ import TextArea from './TextArea';
 import Title from './Title';
 import Input from './Input';
 import Button from './Button';
+import axios from 'axios';
+// import pry from 'pryjs'
 
 const Wrapper = styled.section`
   margin: 40px 0;
@@ -45,9 +47,18 @@ export default class App extends Component {
   }
 
   handleClick(event) {
-    //
-    // @todo IMPLEMENT ME
-    //
+    axios.post('http://localhost:3000/messages', {
+      params: {
+        input: this.state.input
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    // console.log(this.state.input)
   }
 
   render() {
@@ -62,6 +73,7 @@ export default class App extends Component {
             type="text"
             placeholder="User Response"
           />
+          <input type="text" />
           <Button onClick={this.handleClick}>Send</Button>
         </UserInputWrapper>
       </Wrapper>
