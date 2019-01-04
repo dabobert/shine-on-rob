@@ -75,6 +75,7 @@ router.post('/', function(req, res, next) {
         });
       break;
     case "goalLookup":
+      goal = req.body.params.input;
       res.json({
         message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
         name: name,
