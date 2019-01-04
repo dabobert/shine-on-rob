@@ -12,6 +12,7 @@ use restclient to get data from shine test api
 
 const { User } = require('../sequelize')
 const { Truthy } = require('../models/truthy')
+const { Greeter } = require('../models/greeter')
 var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
@@ -25,7 +26,7 @@ var pry = require('pryjs')
 //     // eval(pry.it)
 // })
 
-
+ // eval(pry.it)
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -56,7 +57,7 @@ router.post('/', function(req, res, next) {
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
   switch(req.body.params.aasm_state) {
     case "greetings":
-      res.json({ message: "FIX THIS ASAP!!!!!! Greetings! Demand Name!!!", nextState: "nameLookup" })
+      res.json({ message: (new Greeter).speak(), nextState: "nameLookup" })
       break;
     case "nameLookup":
       if (false)
