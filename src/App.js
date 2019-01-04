@@ -35,10 +35,54 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { incomingMessage: '', input: '', aasm_state: '', name: '', goal: 'greetings' };
+
+
+    this.state = { incomingMessage: '', input: '', aasm_state: 'why?', name: '', goal: '' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+
+
+    axios.post('/messages', {
+      params: {
+        input: this.state.input,
+        aasm_state: 'greetings'
+      }
+    })
+    .then((response) => {
+      console.log(response.data)
+
+
+      this.setState({
+        incomingMessage: response.data.message,
+        aasm_state: response.data.nextState
+      })
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
+
+      // this.setState({
+      //   incomingMessage: response.data.message,
+      //   aasm_state: response.data.nextState
+
+
+
+      // })
+
+
+    // this.state = { incomingMessage: '', input: '', aasm_state: 'greetings', name: '', goal: '' };
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
+
+  onFieldChange(fieldName) {
+        return function (event) {
+            this.setState({[fieldName]: event.target.value});
+        }
+    }
 
   handleInputChange(event) {
     this.setState({
@@ -50,14 +94,18 @@ export default class App extends Component {
     axios.post('/messages', {
       params: {
         input: this.state.input,
-        aasm_state: this.state.aasm_state
+        aasm_state: this.state.aasm_state,
+        goal: this.state.goal,
+        name: this.state.name
       }
     })
     .then((response) => {
       console.log(response.data)
       this.setState({
         incomingMessage: response.data.message,
-        aasm_state: response.data.nextState
+        aasm_state: response.data.nextState,
+        goal: response.data.goal,
+        name: response.data.name,
       })
     })
     .catch((error) => {
@@ -79,13 +127,28 @@ export default class App extends Component {
           />
           
           <Input
+            onChange={this.onFieldChange('aasm_state').bind(this)}
             name="aasm_state"
-            defaultValue={this.state.aasm_state}
+            value={this.state.aasm_state}
             type="text"
             placeholder="state goes here"
           />
 
+          <Input
+            onChange={this.onFieldChange('name').bind(this)}
+            name="name"
+            value={this.state.name}
+            type="text"
+            placeholder="name goes here"
+          />
 
+          <Input
+            onChange={this.onFieldChange('goal').bind(this)}
+            name="goal"
+            value={this.state.goal}
+            type="text"
+            placeholder="goal goes here"
+          />
 
           <Button onClick={this.handleClick}>Send</Button>
         </UserInputWrapper>

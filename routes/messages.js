@@ -48,15 +48,15 @@ router.post('/', function(req, res, next) {
   // eval(pry.it)
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
-  let name = req.body.name;
-  let goal = req.body.goal;
+  let name = req.body.params.name;
+  let goal = req.body.params.goal;
   console.log(req.body)
 
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
   switch(req.body.params.aasm_state) {
     case "greetings":
-      res.json({ message: "FIX THIS ASAP!!!!!! Greetings!", nextState: "nameLookup" })
+      res.json({ message: "FIX THIS ASAP!!!!!! Greetings! Demand Name!!!", nextState: "nameLookup" })
       break;
     case "nameLookup":
       if (false)
@@ -67,7 +67,7 @@ router.post('/', function(req, res, next) {
           nextState: "goalLookup"
         });
       else
-        name = req.body.input;
+        name = req.body.params.input;
         res.json({
           message: `Hi, ${name} Whats one thing you want to work on?`,
           name: name,
