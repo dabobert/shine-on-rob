@@ -1,14 +1,19 @@
 /*
 To do:
-utilize sequlize
-create greeter class
-use restclient to get data from shine test api
-  curl -X POST \
-     -H "Content-Type: application/json" \
-     -d '{"goal":"be more joyful"}' \
-     https://shine-se-test-api.herokuapp.com/
+  point to production db
+  utilize sequlize to:
+    query
+    insert data
+  convert fields to hidden text fields
 */
 
+
+/*
+  Improvements:
+    Create a service object for each state, this way a state could respond to multiple inputs]
+    Use a graph DB to store conversatioal pathways, better mapping of conversional flows    Utlize AIML - https://blog.recime.io/using-aiml-and-nlp-to-create-a-conversation-flow-for-your-chatbot-fea63d09b2e6
+    
+*/
 
 const { User } = require('../sequelize')
 const { Truthy } = require('../models/truthy')
@@ -16,6 +21,7 @@ const { Greeter } = require('../models/greeter')
 var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
+var axios = require('axios')
 
 // User.findOne({
 //   where: { name: 'john' },
@@ -26,7 +32,11 @@ var pry = require('pryjs')
 //     // eval(pry.it)
 // })
 
- // eval(pry.it)
+
+
+// eval(pry.it)
+
+
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -90,12 +100,26 @@ router.post('/', function(req, res, next) {
       if (t.value) 
         // save to the db
         // fetch the goal
-        res.json({
-          message: `Great! Heres a daily dose of Shine to get you started {contentFromAPi}`,
-          name: name,
-          goal: goal,
-          nextState: "complete"
+
+
+
+
+
+
+        axios.post('https://shine-se-test-api.herokuapp.com/', {
+          goal: "be more joyful"
         })
+        .then((response) => {
+          res.json({
+            message: `Great! Heres a daily dose of Shine to get you started ${response.data.content}`,
+            name: name,
+            goal: goal,
+            nextState: "complete"
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       else
         res.json({
           message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
