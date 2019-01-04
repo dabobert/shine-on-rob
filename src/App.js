@@ -37,31 +37,12 @@ export default class App extends Component {
 
 
 
-    this.state = { incomingMessage: '', input: '', aasm_state: 'why?', name: '', goal: '' };
+    this.state = { incomingMessage: '', input: '', aasm_state: 'greetings', name: '', goal: '' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
 
 
-    axios.post('/messages', {
-      params: {
-        input: this.state.input,
-        aasm_state: 'greetings'
-      }
-    })
-    .then((response) => {
-      console.log(response.data)
-
-
-      this.setState({
-        incomingMessage: response.data.message,
-        aasm_state: response.data.nextState
-      })
-
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
+    this.requestData()
 
 
       // this.setState({
@@ -78,19 +59,7 @@ export default class App extends Component {
     // this.handleClick = this.handleClick.bind(this);
   }
 
-  onFieldChange(fieldName) {
-        return function (event) {
-            this.setState({[fieldName]: event.target.value});
-        }
-    }
-
-  handleInputChange(event) {
-    this.setState({
-      input: event.target.value,
-    });
-  }
-
-  handleClick(event) {
+  requestData() {
     axios.post('/messages', {
       params: {
         input: this.state.input,
@@ -111,6 +80,23 @@ export default class App extends Component {
     .catch((error) => {
       console.log(error);
     });
+
+  }
+
+  onFieldChange(fieldName) {
+        return function (event) {
+            this.setState({[fieldName]: event.target.value});
+        }
+    }
+
+  handleInputChange(event) {
+    this.setState({
+      input: event.target.value,
+    });
+  }
+
+  handleClick(event) {
+    this.requestData()
   }
 
   render() {
