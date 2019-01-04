@@ -42,7 +42,7 @@ router.get('/', function(req, res, next) {
 
 
 /*
-  Because this app is so simple we are passing user & goal, rathet than the user id.  This is also because
+  Because this app is so simple we are passing user & goal, rather than the user id.  This is also because
   for the majority of the app, the data is in memory and not saved yet
 */
 router.post('/', function(req, res, next) {
