@@ -3,11 +3,11 @@
 class Truthy {
 
   constructor(input){
-    this.input = input ;
+    this.input = input
   }
 
   value() {
-    false
+    return false
   }
 }
 
