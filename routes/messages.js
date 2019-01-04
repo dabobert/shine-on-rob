@@ -11,10 +11,10 @@ use restclient to get data from shine test api
 
 
 const { User } = require('../sequelize')
+const { Truthy } = require('../models/truthy')
 var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
-const { Truthy } = require('../models/truthy')
 
 // User.findOne({
 //   where: { name: 'john' },
@@ -84,10 +84,9 @@ router.post('/', function(req, res, next) {
       });
       break;
     case "confirmGoal":
+      //converts truthy and falsey values to true and false
       t = new Truthy(req.body.params.input)
-      eval(pry.it)
-
-      if (t.value) //truthy values
+      if (t.value) 
         // save to the db
         // fetch the goal
         res.json({
