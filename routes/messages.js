@@ -14,16 +14,19 @@ const { User } = require('../sequelize')
 var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
+const { Truthy } = require('../models/truthy')
 
 
-User.findOne({
-  where: { name: 'john' },
-  // order: ['id', 'DESC'],
-  attributes: ['id', ['name', 'goal']]
-}).then(user => {
-  console.log(user);
-    // eval(pry.it)
-})
+    eval(pry.it)
+
+// User.findOne({
+//   where: { name: 'john' },
+//   // order: ['id', 'DESC'],
+//   attributes: ['id', ['name', 'goal']]
+// }).then(user => {
+//   console.log(user);
+//     // eval(pry.it)
+// })
 
 
 
