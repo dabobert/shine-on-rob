@@ -12,6 +12,7 @@ To do:
     replace promises with async/await functions
     move db config out of the model into a yml file not in the repo or the env variables
     my react throws a warning
+    use local db for testing
 */
 
 const { User } = require('../sequelize')
@@ -123,7 +124,7 @@ router.post('/', function(req, res, next) {
         });
       break;
     default: 
-      res.json({ message: "I got confused lets start over. Whats your name", nextState: "nameLookup"  })
+      res.json({ message: "I got confused lets start over. Whats your name?", nextState: "nameLookup"  })
   }
 });
 
