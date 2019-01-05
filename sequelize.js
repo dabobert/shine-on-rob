@@ -9,6 +9,7 @@ const sequelize = new Sequelize('se_test', 'se_candidate', 'shineon', {
 
 const User = UserModel(sequelize, Sequelize)
 
-sequelize.sync()
+// Disabled now that we are no longer user a local db for development
+// sequelize.sync()
 
 module.exports = { User }
