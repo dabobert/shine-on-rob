@@ -26,18 +26,6 @@ var pry = require('pryjs')
 var axios = require('axios')
 
 
-
-      User.findOne({
-        where: { name: 'jon' },
-        order: ['id'],
-        // attributes: ['id', ['name', 'goal']]
-      }).then(user => {
-        console.log(user);
-          eval(pry.it)
-      })
-
-
-
 // User.findOne({
 //   where: { name: 'john' },
 //   // order: ['id', 'DESC'],
@@ -88,32 +76,30 @@ router.post('/', function(req, res, next) {
 
 
 
+
       User.findOne({
         where: { name: name },
-        order: ['id'],
-        attributes: ['id', ['name', 'goal']]
+        order: [
+          ['id', 'DESC']
+        ],
       }).then(user => {
-        console.log(user);
-          eval(pry.it)
+        if (user) {
+          goal = user.goal
+          res.json({
+            message: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
+            name: name,
+            goal: goal,
+            nextState: "goalLookup"
+          });
+         } else {
+          name = req.body.input;
+          res.json({
+            message: `Hi, ${name} Whats one thing you want to work on?`,
+            name: name,
+            nextState: "goalLookup"
+          });
+        }        
       })
-
-
-
-
-      if (false)
-        res.json({
-          message: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
-          name: name,
-          goal: goal,
-          nextState: "goalLookup"
-        });
-      else
-        name = req.body.input;
-        res.json({
-          message: `Hi, ${name} Whats one thing you want to work on?`,
-          name: name,
-          nextState: "goalLookup"
-        });
       break;
     case "goalLookup":
       goal = req.body.input;
