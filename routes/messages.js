@@ -110,7 +110,8 @@ router.post('/', function(req, res, next) {
               message: `Great! Heres a daily dose of Shine to get you started ${response.data.content}`,
               name: name,
               goal: goal,
-              nextState: "complete"
+              nextState: "complete",
+              userId: user.id
             })
           })
           .catch((error) => {
