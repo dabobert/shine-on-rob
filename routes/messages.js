@@ -18,25 +18,13 @@ const { Truthy } = require('../models/truthy')
 const { Greeter } = require('../models/greeter')
 var express = require('express');
 var router = express.Router();
+// pry is a ruby REPL debug gem, that i was happy to see have a port in node
 var pry = require('pryjs')
+// Using axios instead of fetch because axios returns promises
 var axios = require('axios')
 
 
-// User.findOne({
-//   where: { name: 'john' },
-//   // order: ['id', 'DESC'],
-//   attributes: ['id', ['name', 'goal']]
-// }).then(user => {
-//   console.log(user);
-//     // eval(pry.it)
-// })
-
-
-
-// eval(pry.it)
-
-
-
+// Trying to bypass potential CORS error
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -55,8 +43,8 @@ router.get('/', function(req, res, next) {
   for the majority of the app, the data is in memory and not saved yet
 */
 router.post('/', function(req, res, next) {
+  // listing all incoming body variables
   console.log(req.body)
-  // eval(pry.it)
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
   // allows us to test the app via react or a pure rest client
