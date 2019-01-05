@@ -1,7 +1,6 @@
 /*
 To do:
   convert fields to hidden text fields
-  testing for truthy
   testing for backend
   testing for frontend
 */

@@ -67,7 +67,6 @@ describe('POSTS /messages', function() {
       })
       .expect(200)
       .end(function(err, res) {
-        // eval(pry.it)
         expect(res.body).to.eql({
           message: `Hi, ${name} Whats one thing you want to work on?`,
           nextState: "goalLookup",
