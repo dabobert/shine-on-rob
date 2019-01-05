@@ -48,7 +48,8 @@ router.get('/', function(req, res, next) {
 */
 router.post('/', function(req, res, next) {
   // listing all incoming body variables
-  console.log(req.body)
+  // console.log(req.body)
+  
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
   // allows us to test the app via react or a pure rest client
