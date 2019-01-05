@@ -12,7 +12,7 @@ To do:
     replace promises with async/await functions
     move db config out of the model into a yml file not in the repo or the env variables
     my react throws a warning
-    use local db for testing
+    use local db for testing. created name with random uuid for testing in the app
 */
 
 const { User } = require('../sequelize')
