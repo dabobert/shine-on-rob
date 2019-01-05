@@ -14,7 +14,7 @@ To do:
   Improvements:
     Create a service object for each state, this way a state could respond to multiple inputs]
     Use a graph DB to store conversatioal pathways, better mapping of conversional flows    Utlize AIML - https://blog.recime.io/using-aiml-and-nlp-to-create-a-conversation-flow-for-your-chatbot-fea63d09b2e6
-    
+    replace promises with async/await functions    
 */
 
 const { User } = require('../sequelize')
@@ -73,10 +73,6 @@ router.post('/', function(req, res, next) {
       res.json({ message: (new Greeter).speak(), nextState: "nameLookup" })
       break;
     case "nameLookup":
-
-
-
-
       User.findOne({
         where: { name: name },
         order: [
@@ -112,24 +108,24 @@ router.post('/', function(req, res, next) {
       break;
     case "confirmGoal":
       //converts truthy and falsey values to true and false
-      t = new Truthy(req.body.input)
-      if (t.value) 
-        // save to the db
-        // fetch the goal from Shine API
-        axios.post('https://shine-se-test-api.herokuapp.com/', {
-          goal: "be more joyful"
-        })
-        .then((response) => {
-          res.json({
-            message: `Great! Heres a daily dose of Shine to get you started ${response.data.content}`,
-            name: name,
-            goal: goal,
-            nextState: "complete"
+      if (new Truthy(req.body.input).value()) 
+        User.create({ name, goal}).then(task => {
+          // fetch the goal from Shine API
+          axios.post('https://shine-se-test-api.herokuapp.com/', {
+            goal: "be more joyful"
           })
+          .then((response) => {
+            res.json({
+              message: `Great! Heres a daily dose of Shine to get you started ${response.data.content}`,
+              name: name,
+              goal: goal,
+              nextState: "complete"
+            })
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         })
-        .catch((error) => {
-          console.log(error);
-        });
       else
         res.json({
           message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
