@@ -29,6 +29,12 @@ describe('GET /messages', function() {
 
 // In this test it's expected to return the basic message
 describe('POSTS /messages', function() {
+  // Values to be used for the following tests:
+  let newName = `RJ Test ID:${Date.now()}`
+  let newGoal = "enlightenment"
+  let oldName = "4ca683c9-5cac-4a41-86b3-20125c01fd3d"
+  let oldGoal = "employment"
+
   it('returns confused state when no data is sent', function(done) {
     request.post('/messages')
       .send({})
@@ -42,7 +48,7 @@ describe('POSTS /messages', function() {
     });
   });
 
-  it('returns a greeting', function(done) {
+  it('is in state of greetings: returns a greeting', function(done) {
     request.post('/messages')
       .send({ aasm_state: "greetings" })
       .expect(200)
@@ -55,4 +61,41 @@ describe('POSTS /messages', function() {
       done(err);
     });
   });
+
+
+  it('is in state of nameLookup: asks for goal when name not recognized and state', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "nameLookup",
+        input: newName
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `Hi, ${newName} Whats one thing you want to work on?`,
+          nextState: "goalLookup",
+          name: newName
+        });
+      done(err);
+    });
+  });
+
+  it('is in state of nameLookup:: confirms old goal when name is recognized and state', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "nameLookup",
+        input: oldName
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `Hi ${oldName}! Welcome back! you said before you wanted to work on: ${oldGoal}. What do you want to work on now?`,
+          nextState: "goalLookup",
+          name: oldName,
+          goal: oldGoal
+        });
+      done(err);
+    });
+  });
+
 });
