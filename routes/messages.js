@@ -11,6 +11,7 @@ To do:
     Use a graph DB to store conversatioal pathways, better mapping of conversional flows    Utlize AIML - https://blog.recime.io/using-aiml-and-nlp-to-create-a-conversation-flow-for-your-chatbot-fea63d09b2e6
     replace promises with async/await functions
     move db config out of the model into a yml file not in the repo or the env variables
+    my react throws a warning
 */
 
 const { User } = require('../sequelize')
