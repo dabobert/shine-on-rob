@@ -4,7 +4,9 @@ To do:
   utilize sequlize to:
     query
     insert data
+  fix params so they are req.body.params
   convert fields to hidden text fields
+  testing
 */
 
 
@@ -22,6 +24,19 @@ var express = require('express');
 var router = express.Router();
 var pry = require('pryjs')
 var axios = require('axios')
+
+
+
+      User.findOne({
+        where: { name: 'jon' },
+        order: ['id'],
+        // attributes: ['id', ['name', 'goal']]
+      }).then(user => {
+        console.log(user);
+          eval(pry.it)
+      })
+
+
 
 // User.findOne({
 //   where: { name: 'john' },
@@ -56,20 +71,35 @@ router.get('/', function(req, res, next) {
   for the majority of the app, the data is in memory and not saved yet
 */
 router.post('/', function(req, res, next) {
+  console.log(req.body)
   // eval(pry.it)
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
-  let name = req.body.params.name;
-  let goal = req.body.params.goal;
-  console.log(req.body)
+  let name = req.body.name;
+  let goal = req.body.goal;
 
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
-  switch(req.body.params.aasm_state) {
+  switch(req.body.aasm_state) {
     case "greetings":
       res.json({ message: (new Greeter).speak(), nextState: "nameLookup" })
       break;
     case "nameLookup":
+
+
+
+      User.findOne({
+        where: { name: name },
+        order: ['id'],
+        attributes: ['id', ['name', 'goal']]
+      }).then(user => {
+        console.log(user);
+          eval(pry.it)
+      })
+
+
+
+
       if (false)
         res.json({
           message: `Hi ${name}! Welcome back! you said before you wanted to work on: ${goal}. What do you want to work on now?`,
@@ -78,7 +108,7 @@ router.post('/', function(req, res, next) {
           nextState: "goalLookup"
         });
       else
-        name = req.body.params.input;
+        name = req.body.input;
         res.json({
           message: `Hi, ${name} Whats one thing you want to work on?`,
           name: name,
@@ -86,7 +116,7 @@ router.post('/', function(req, res, next) {
         });
       break;
     case "goalLookup":
-      goal = req.body.params.input;
+      goal = req.body.input;
       res.json({
         message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
         name: name,
@@ -96,16 +126,10 @@ router.post('/', function(req, res, next) {
       break;
     case "confirmGoal":
       //converts truthy and falsey values to true and false
-      t = new Truthy(req.body.params.input)
+      t = new Truthy(req.body.input)
       if (t.value) 
         // save to the db
-        // fetch the goal
-
-
-
-
-
-
+        // fetch the goal from Shine API
         axios.post('https://shine-se-test-api.herokuapp.com/', {
           goal: "be more joyful"
         })
