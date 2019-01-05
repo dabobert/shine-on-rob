@@ -50,10 +50,10 @@ router.post('/', function(req, res, next) {
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
   // allows us to test the app via react or a pure rest client
-  let name = req.body.name || req.body.params.name
-  let goal = req.body.goal || req.body.params.goal
-  let input = req.body.input || req.body.params.input
-  let aasm_state = req.body.aasm_state || req.body.params.aasm_state
+  let name = req.body.name || (req.body.params && req.body.params.name)
+  let goal = req.body.goal || (req.body.params && req.body.params.goal)
+  let input = req.body.input || (req.body.params && req.body.params.input)
+  let aasm_state = req.body.aasm_state || (req.body.params && req.body.params.aasm_state)
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
   switch(aasm_state) {
