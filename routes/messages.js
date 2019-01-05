@@ -1,6 +1,5 @@
 /*
 To do:
-  point to production db
   convert fields to hidden text fields
   testing
 */
@@ -10,11 +9,13 @@ To do:
   Improvements:
     Create a service object for each state, this way a state could respond to multiple inputs]
     Use a graph DB to store conversatioal pathways, better mapping of conversional flows    Utlize AIML - https://blog.recime.io/using-aiml-and-nlp-to-create-a-conversation-flow-for-your-chatbot-fea63d09b2e6
-    replace promises with async/await functions    
+    replace promises with async/await functions
+    move db config out of the model into a yml file not in the repo or the env variables
 */
 
 const { User } = require('../sequelize')
 const { Truthy } = require('../models/truthy')
+// Created a class for greeter.  I didn't want to pollute the route with the greeting logic, that could easily 
 const { Greeter } = require('../models/greeter')
 var express = require('express');
 var router = express.Router();
