@@ -100,7 +100,7 @@ router.post('/', function(req, res, next) {
     case "confirmGoal":
       //converts truthy and falsey values to true and false
       if (new Truthy(input).value()) 
-        User.create({ name, goal}).then(task => {
+        User.create({ name, goal}).then(user => {
           // fetch the goal from Shine API
           axios.post('https://shine-se-test-api.herokuapp.com/', {
             goal: goal
