@@ -63,12 +63,14 @@ router.post('/', function(req, res, next) {
   // eval(pry.it)
   // putting these into variables, because if this were to extended these values may have to be cleansed. for instance
   // the goal should be joy, not JoY or joy!!!!!!!!!
-  let name = req.body.name;
-  let goal = req.body.goal;
-
+  // allows us to test the app via react or a pure rest client
+  let name = req.body.name || req.body.params.name
+  let goal = req.body.goal || req.body.params.goal
+  let input = req.body.input || req.body.params.input
+  let aasm_state = req.body.aasm_state || req.body.params.aasm_state
 
   //VERY basic state machine.  to improve quality of each conversation at each state, a service object could be created
-  switch(req.body.aasm_state) {
+  switch(aasm_state) {
     case "greetings":
       res.json({ message: (new Greeter).speak(), nextState: "nameLookup" })
       break;
@@ -88,7 +90,7 @@ router.post('/', function(req, res, next) {
             nextState: "goalLookup"
           });
          } else {
-          name = req.body.input;
+          name = input;
           res.json({
             message: `Hi, ${name} Whats one thing you want to work on?`,
             name: name,
@@ -98,7 +100,7 @@ router.post('/', function(req, res, next) {
       })
       break;
     case "goalLookup":
-      goal = req.body.input;
+      goal = input;
       res.json({
         message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
         name: name,
@@ -108,7 +110,7 @@ router.post('/', function(req, res, next) {
       break;
     case "confirmGoal":
       //converts truthy and falsey values to true and false
-      if (new Truthy(req.body.input).value()) 
+      if (new Truthy(input).value()) 
         User.create({ name, goal}).then(task => {
           // fetch the goal from Shine API
           axios.post('https://shine-se-test-api.herokuapp.com/', {
