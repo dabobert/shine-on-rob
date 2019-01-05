@@ -11,9 +11,6 @@ global.expect = chai.expect;
 global.request = supertest(app);  
 
 
-
-
-
 // In this test it's expected to return the basic message
 describe('GET /messages', function() {
   it('returns you must "post" a request', function(done) {
@@ -30,8 +27,8 @@ describe('GET /messages', function() {
 // In this test it's expected to return the basic message
 describe('POSTS /messages', function() {
   // Values to be used for the following tests:
-  let newName = `RJ Test ID:${Date.now()}`
-  let newGoal = "enlightenment"
+  let name = `RJ Test ID:${Date.now()}`
+  let goal = "enlightenment"
   let oldName = "4ca683c9-5cac-4a41-86b3-20125c01fd3d"
   let oldGoal = "employment"
 
@@ -66,21 +63,21 @@ describe('POSTS /messages', function() {
   it('is in state of nameLookup: asks for goal when name not recognized and state', function(done) {
     request.post('/messages')
       .send({ aasm_state: "nameLookup",
-        input: newName
+        input: name
       })
       .expect(200)
       .end(function(err, res) {
         // eval(pry.it)
         expect(res.body).to.eql({
-          message: `Hi, ${newName} Whats one thing you want to work on?`,
+          message: `Hi, ${name} Whats one thing you want to work on?`,
           nextState: "goalLookup",
-          name: newName
+          name: name
         });
       done(err);
     });
   });
 
-  it('is in state of nameLookup:: confirms old goal when name is recognized and state', function(done) {
+  it('is in state of nameLookup: confirms old goal when name is recognized and state', function(done) {
     request.post('/messages')
       .send({ aasm_state: "nameLookup",
         input: oldName
@@ -98,4 +95,23 @@ describe('POSTS /messages', function() {
     });
   });
 
+
+  it('is in state of goalLookup: confirm what goal user wants to work on', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "goalLookup",
+        input: goal,
+        name: name
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
+          nextState: "confirmGoal",
+          name: name,
+          goal: goal
+        });
+      done(err);
+    });
+  });
 });

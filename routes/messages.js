@@ -1,7 +1,9 @@
 /*
 To do:
   convert fields to hidden text fields
-  testing
+  testing for truthy
+  testing for backend
+  testing for frontend
 */
 
 
@@ -25,7 +27,6 @@ var router = express.Router();
 var pry = require('pryjs')
 // Using axios instead of fetch because axios returns promises
 var axios = require('axios')
-
 
 // Trying to bypass potential CORS error
 router.use(function(req, res, next) {
