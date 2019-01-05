@@ -113,4 +113,23 @@ describe('POSTS /messages', function() {
       done(err);
     });
   });
+
+
+  it('is in state of confirmGoal: returns to goalLookup if a false-y values is submitted as input', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "confirmGoal",
+        input: "no",
+        name: name
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
+          name: name,
+          nextState: "goalLookup"
+        });
+      done(err);
+    });
+  });
 });
