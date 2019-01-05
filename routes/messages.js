@@ -1,10 +1,6 @@
 /*
 To do:
   point to production db
-  utilize sequlize to:
-    query
-    insert data
-  fix params so they are req.body.params
   convert fields to hidden text fields
   testing
 */
@@ -75,8 +71,9 @@ router.post('/', function(req, res, next) {
       res.json({ message: (new Greeter).speak(), nextState: "nameLookup" })
       break;
     case "nameLookup":
+      name = input
       User.findOne({
-        where: { name: name },
+        where: { name },
         order: [
           ['id', 'DESC']
         ],
@@ -114,7 +111,7 @@ router.post('/', function(req, res, next) {
         User.create({ name, goal}).then(task => {
           // fetch the goal from Shine API
           axios.post('https://shine-se-test-api.herokuapp.com/', {
-            goal: "be more joyful"
+            goal: goal
           })
           .then((response) => {
             res.json({
