@@ -1,4 +1,5 @@
-var { Greeter } = require('../models/greeter')
+const { User } = require('../sequelize')
+const { Greeter } = require('../models/greeter')
 var supertest = require('supertest');  
 var chai = require('chai');  
 var uuid = require('uuid');  
@@ -41,8 +42,8 @@ describe('POSTS /messages', function() {
         expect(res.body).to.eql({
           message: 'I got confused lets start over. Whats your name?',
           nextState: 'nameLookup' });
-      done(err);
-    });
+        done(err);
+      });
   });
 
   it('is in state of greetings: returns a greeting', function(done) {
@@ -55,8 +56,8 @@ describe('POSTS /messages', function() {
           message: (new Greeter).speak(),
           nextState: "nameLookup"
         });
-      done(err);
-    });
+        done(err);
+      });
   });
 
 
@@ -72,8 +73,8 @@ describe('POSTS /messages', function() {
           nextState: "goalLookup",
           name: name
         });
-      done(err);
-    });
+        done(err);
+      });
   });
 
   it('is in state of nameLookup: confirms old goal when name is recognized and state', function(done) {
@@ -90,8 +91,8 @@ describe('POSTS /messages', function() {
           name: oldName,
           goal: oldGoal
         });
-      done(err);
-    });
+        done(err);
+      });
   });
 
 
@@ -110,8 +111,8 @@ describe('POSTS /messages', function() {
           name: name,
           goal: goal
         });
-      done(err);
-    });
+        done(err);
+      });
   });
 
 
@@ -129,8 +130,8 @@ describe('POSTS /messages', function() {
           name: name,
           nextState: "goalLookup"
         });
-      done(err);
-    });
+        done(err);
+      });
   });
 
   it('is in state of confirmGoal: if a true-y value is submitted as input creates user row and pulls data from shine api', function(done) {
@@ -142,14 +143,23 @@ describe('POSTS /messages', function() {
       })
       .expect(200)
       .end(function(err, res) {
-        // eval(pry.it)
-        expect(res.body).to.eql({
-        message: "Great! Heres a daily dose of Shine to get you started http://daily.shinetext.com/2017-03-21",
-        name: name,
-        goal: goal,
-        nextState: "complete"
+        subResponse = res.body
+        // store the value in the databse
+        userId = res.body.userId
+        // remove userId from the response, so the expect can pass
+        delete subResponse["userId"]
+        // match the rest of the object to the json
+        expect(subResponse).to.eql({
+          message: "Great! Heres a daily dose of Shine to get you started http://daily.shinetext.com/2017-03-21",
+          name: name,
+          goal: goal,
+          nextState: "complete"
+        });
+        // verify that we can find a user/row with this id
+        User.findOne({where: { id: userId }}).then(user => {
+          expect(user).to.be.ok
+          done(err);
+        })
       });
-      done(err);
-    });
   });
 });
