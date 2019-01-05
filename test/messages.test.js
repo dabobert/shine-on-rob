@@ -1,3 +1,4 @@
+var { Greeter } = require('../models/greeter')
 var supertest = require('supertest');  
 var chai = require('chai');  
 var uuid = require('uuid');  
@@ -37,22 +38,21 @@ describe('POSTS /messages', function() {
         expect(res.body).to.eql({
           message: 'I got confused lets start over. Whats your name?',
           nextState: 'nameLookup' });
-        done(err);
-      });
+      done(err);
+    });
   });
 
-  // it('returns confused state when no data is sent', function(done) {
-  //   request.post('/messages')
-  //     .send({})
-  //     .expect(200)
-  //     .end(function(err, res) {
-  //       // eval(pry.it)
-  //       expect(res.body).to.eq({
-  //         message: 'I got confused lets start over. Whats your name',
-  //         nextState: 'nameLookup' });
-  //       done(err);
-  //     });
-  // });
-
-
+  it('returns a greeting', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "greetings" })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: (new Greeter).speak(),
+          nextState: "nameLookup"
+        });
+      done(err);
+    });
+  });
 });
