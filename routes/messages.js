@@ -17,8 +17,9 @@ To do:
 */
 
 const { User } = require('../sequelize')
+// Created a class to convert string values to true and false.  I didn't want to pollute the route with if/switch statements that could easily be expanded upon
 const { Truthy } = require('../models/truthy')
-// Created a class for greeter.  I didn't want to pollute the route with the greeting logic, that could easily 
+// Created a class for greeter.  I didn't want to pollute the route with the greeting logic, that could easily be expanded upon
 const { Greeter } = require('../models/greeter')
 var express = require('express');
 var router = express.Router();
