@@ -5,7 +5,7 @@
   "proxy": "http://localhost:3000/",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "./node_modules/.bin/mocha test/**/*.js",
+    "test": "./node_modules/.bin/mocha test/**/*.js --exit",
     "build:client": "tar --exclude='./build' -zcvf ./build/se-test.tar.gz ./",
     "start:server": "node ./bin/www",
     "client:start": "PORT=3006 react-scripts start",

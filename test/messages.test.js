@@ -61,105 +61,105 @@ describe('POSTS /messages', function() {
   });
 
 
-//   it('is in state of nameLookup: asks for goal when name not recognized and state', function(done) {
-//     request.post('/messages')
-//       .send({ aasm_state: "nameLookup",
-//         input: name
-//       })
-//       .expect(200)
-//       .end(function(err, res) {
-//         expect(res.body).to.eql({
-//           message: `Hi, ${name} Whats one thing you want to work on?`,
-//           nextState: "goalLookup",
-//           name: name
-//         });
-//         done(err);
-//       });
-//   });
+  it('is in state of nameLookup: asks for goal when name not recognized and state', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "nameLookup",
+        input: name
+      })
+      .expect(200)
+      .end(function(err, res) {
+        expect(res.body).to.eql({
+          message: `Hi, ${name} Whats one thing you want to work on?`,
+          nextState: "goalLookup",
+          name: name
+        });
+        done(err);
+      });
+  });
 
-//   it('is in state of nameLookup: confirms old goal when name is recognized and state', function(done) {
-//     request.post('/messages')
-//       .send({ aasm_state: "nameLookup",
-//         input: oldName
-//       })
-//       .expect(200)
-//       .end(function(err, res) {
-//         // eval(pry.it)
-//         expect(res.body).to.eql({
-//           message: `Hi ${oldName}! Welcome back! you said before you wanted to work on: ${oldGoal}. What do you want to work on now?`,
-//           nextState: "goalLookup",
-//           name: oldName,
-//           goal: oldGoal
-//         });
-//         done(err);
-//       });
-//   });
-
-
-//   it('is in state of goalLookup: confirm what goal user wants to work on', function(done) {
-//     request.post('/messages')
-//       .send({ aasm_state: "goalLookup",
-//         input: goal,
-//         name: name
-//       })
-//       .expect(200)
-//       .end(function(err, res) {
-//         // eval(pry.it)
-//         expect(res.body).to.eql({
-//           message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
-//           nextState: "confirmGoal",
-//           name: name,
-//           goal: goal
-//         });
-//         done(err);
-//       });
-//   });
+  it('is in state of nameLookup: confirms old goal when name is recognized and state', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "nameLookup",
+        input: oldName
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `Hi ${oldName}! Welcome back! you said before you wanted to work on: ${oldGoal}. What do you want to work on now?`,
+          nextState: "goalLookup",
+          name: oldName,
+          goal: oldGoal
+        });
+        done(err);
+      });
+  });
 
 
-//   it('is in state of confirmGoal: if a false-y value is submitted as input returns to goalLookup', function(done) {
-//     request.post('/messages')
-//       .send({ aasm_state: "confirmGoal",
-//         input: "no",
-//         name: name
-//       })
-//       .expect(200)
-//       .end(function(err, res) {
-//         // eval(pry.it)
-//         expect(res.body).to.eql({
-//           message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
-//           name: name,
-//           nextState: "goalLookup"
-//         });
-//         done(err);
-//       });
-//   });
+  it('is in state of goalLookup: confirm what goal user wants to work on', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "goalLookup",
+        input: goal,
+        name: name
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `So you want to work on ${goal}. Does that sound right, ${name}?`,
+          nextState: "confirmGoal",
+          name: name,
+          goal: goal
+        });
+        done(err);
+      });
+  });
 
-//   it('is in state of confirmGoal: if a true-y value is submitted as input creates user row and pulls data from shine api', function(done) {
-//     request.post('/messages')
-//       .send({ aasm_state: "confirmGoal",
-//         input: "yes",
-//         name: name,
-//         goal: goal
-//       })
-//       .expect(200)
-//       .end(function(err, res) {
-//         subResponse = res.body
-//         // store the value in the databse
-//         userId = res.body.userId
-//         // remove userId from the response, so the expect can pass
-//         delete subResponse["userId"]
-//         // match the rest of the object to the json
-//         expect(subResponse).to.eql({
-//           message: "Great! Heres a daily dose of Shine to get you started http://daily.shinetext.com/2017-03-21",
-//           name: name,
-//           goal: goal,
-//           nextState: "complete"
-//         });
-//         // verify that we can find a user/row with this id
-//         User.findOne({where: { id: userId }}).then(user => {
-//           expect(user).to.be.ok
-//           done(err);
-//         })
-//       });
-//   });
+
+  it('is in state of confirmGoal: if a false-y value is submitted as input returns to goalLookup', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "confirmGoal",
+        input: "no",
+        name: name
+      })
+      .expect(200)
+      .end(function(err, res) {
+        // eval(pry.it)
+        expect(res.body).to.eql({
+          message: `No problem, ${name}! Let's try again. What's one thing you want to work on?`,
+          name: name,
+          nextState: "goalLookup"
+        });
+        done(err);
+      });
+  });
+
+  it('is in state of confirmGoal: if a true-y value is submitted as input creates user row and pulls data from shine api', function(done) {
+    request.post('/messages')
+      .send({ aasm_state: "confirmGoal",
+        input: "yes",
+        name: name,
+        goal: goal
+      })
+      .expect(200)
+      .end(function(err, res) {
+        subResponse = res.body
+        // store the value in the databse
+        userId = res.body.userId
+        // remove userId from the response, so the expect can pass
+        delete subResponse["userId"]
+        // match the rest of the object to the json
+        expect(subResponse).to.eql({
+          message: "Great! Heres a daily dose of Shine to get you started http://daily.shinetext.com/2017-03-21",
+          name: name,
+          goal: goal,
+          nextState: "complete"
+        });
+        // verify that we can find a user/row with this id
+        User.findOne({where: { id: userId }}).then(user => {
+          expect(user).to.be.ok
+          done(err);
+        })
+      });
+  });
 });
