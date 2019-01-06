@@ -23,11 +23,10 @@ it('should start in greetings state', () => {
 });
 
 
-
 it('should understand handleClick event', () => {
   const spy = jest.spyOn(App.prototype, 'handleClick');
   const app = mount(<App />);
-  app.find('button').simulate('click', 'using prototype');
+  app.find('button').simulate('click');
   expect(spy).toHaveBeenCalled();
 });
 
