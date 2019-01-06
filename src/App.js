@@ -35,28 +35,10 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-
-
     this.state = { incomingMessage: '', input: '', aasm_state: 'greetings', name: '', goal: '' };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-
-
     this.requestData()
-
-
-      // this.setState({
-      //   incomingMessage: response.data.message,
-      //   aasm_state: response.data.nextState
-
-
-
-      // })
-
-
-    // this.state = { incomingMessage: '', input: '', aasm_state: 'greetings', name: '', goal: '' };
-    // this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
   }
 
   requestData() {
@@ -84,10 +66,10 @@ export default class App extends Component {
   }
 
   onFieldChange(fieldName) {
-        return function (event) {
-            this.setState({[fieldName]: event.target.value});
-        }
+    return function (event) {
+      this.setState({[fieldName]: event.target.value});
     }
+  }
 
   handleInputChange(event) {
     this.setState({
@@ -116,7 +98,7 @@ export default class App extends Component {
             onChange={this.onFieldChange('aasm_state').bind(this)}
             name="aasm_state"
             value={this.state.aasm_state}
-            type="text"
+            type="hidden"
             placeholder="state goes here"
           />
 
@@ -124,7 +106,7 @@ export default class App extends Component {
             onChange={this.onFieldChange('name').bind(this)}
             name="name"
             value={this.state.name}
-            type="text"
+            type="hidden"
             placeholder="name goes here"
           />
 
@@ -132,7 +114,7 @@ export default class App extends Component {
             onChange={this.onFieldChange('goal').bind(this)}
             name="goal"
             value={this.state.goal}
-            type="text"
+            type="hidden"
             placeholder="goal goes here"
           />
 
