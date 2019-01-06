@@ -17,12 +17,12 @@ it('renders without crashing', () => {
 });
 
 
-it('should handle the click event', () => {
+it('should start in greetings state', () => {
   // window.alert = jest.fn();
   const app = shallow(
     <App />
   );
   console.log(app.state())
   // app.simulate('click');
-  // expect(window.alert).toHaveBeenCalledWith('clicked');
+  expect(app.state().aasm_state).to.eql('greetings');
 });
