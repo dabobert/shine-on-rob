@@ -25,6 +25,16 @@ it('should start in greetings state', () => {
 
 
 it('should understand handleClick event', () => {
+  const spy = jest.spyOn(App.prototype, 'handleClick');
+  const app = mount(<App />);
+  app.find('button').simulate('click', 'using prototype');
+  expect(spy).toHaveBeenCalled();
+});
+
+
+
+
+it('should requestData and setStates', () => {
   // // other way to init fn
   // const spy = jest.spyOn(wrapper.instance(), 'handleClick'); // replace function via reference
   // ???const app = shallow(<App />);
