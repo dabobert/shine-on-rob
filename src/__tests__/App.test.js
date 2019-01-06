@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
-import { expect } from 'chai';
+// import { expect } from 'chai';
 import { mount } from 'enzyme';
 import App, { Wrapper } from '../App';
 import pry from 'pryjs'
@@ -18,11 +18,45 @@ it('renders without crashing', () => {
 
 
 it('should start in greetings state', () => {
-  // window.alert = jest.fn();
-  const app = shallow(
-    <App />
-  );
-  console.log(app.state())
-  // app.simulate('click');
-  expect(app.state().aasm_state).to.eql('greetings');
+  const app = shallow(<App />);
+  expect(app.state().aasm_state).toMatch('greetings');
+});
+
+
+
+it('should understand handleClick event', () => {
+  // // other way to init fn
+  // const spy = jest.spyOn(wrapper.instance(), 'handleClick'); // replace function via reference
+  // ???const app = shallow(<App />);
+  // wrapper.update(); // forceUpdate()
+  // wrapper.find('button').simulate('click'); // actually calls the spy function
+
+  const spy = jest.spyOn(App.prototype, 'handleClick');
+  const app = mount(<App />);
+
+
+
+
+
+
+
+
+  // console.log(Object.getOwnPropertyNames(app));
+  // console.log(Object.getOwnPropertyNames(app.instance()));
+  // console.log("--------")
+  // console.log(app.state());
+  // app.instance().handleClick();
+  // console.log(app.state());
+  // // app.simulate('click');
+
+
+  // const app = shallow(<App />);
+  app.find('button').simulate('click', 'using prototype');
+  expect(spy).toHaveBeenCalled();
+
+
+
+
+
+
 });
