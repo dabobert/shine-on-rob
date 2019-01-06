@@ -12,6 +12,7 @@ To do:
     Utlize AIML as a way to provide support for nlp tools - https://blog.recime.io/using-aiml-and-nlp-to-create-a-conversation-flow-for-your-chatbot-fea63d09b2e6
     move db config out of the model into a yml file not in the repo or the env variables
     my react throws a warning
+    unify testing paradigm
     use local db for testing. created name with random uuid for testing in the app
     Refactor code to use a sync, and chain promised.  In places i nested thens rather than chaining.  this should be refactored to use await or chaining
     (Assuming a more complex user account system is not being created, where users and goals are not being normalized a la classic dB design)
