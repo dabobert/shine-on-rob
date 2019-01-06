@@ -6,12 +6,20 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "./node_modules/.bin/mocha test/**/*.js --exit",
+    "test:client": "react-scripts test",
     "build:client": "tar --exclude='./build' -zcvf ./build/se-test.tar.gz ./",
     "start:server": "node ./bin/www",
     "client:start": "PORT=3006 react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test",
     "client:eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ]
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -39,5 +47,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "react-addons-test-utils": "^15.6.2"
+  }
 }
