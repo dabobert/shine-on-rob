@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "./node_modules/.bin/mocha test/**/*.js --exit",
-    "test:client": "react-scripts test",
+    "test:client": "react-scripts test --verbose false",
+    "test:client:debug": "react-scripts --inspect-brk test --runInBand",
     "build:client": "tar --exclude='./build' -zcvf ./build/se-test.tar.gz ./",
     "start:server": "node ./bin/www",
     "client:start": "PORT=3006 react-scripts start",

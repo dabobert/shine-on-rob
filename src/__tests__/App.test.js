@@ -5,7 +5,6 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-// import { spy } from 'sinon';
 import App, { Wrapper } from '../App';
 import pry from 'pryjs'
 
@@ -19,12 +18,11 @@ it('renders without crashing', () => {
 
 
 it('should handle the click event', () => {
-  window.alert = jest.fn();
+  // window.alert = jest.fn();
   const app = shallow(
     <App />
   );
-  app.requestData;
-  console.log({a: 1})
+  console.log(app.state())
   // app.simulate('click');
   // expect(window.alert).toHaveBeenCalledWith('clicked');
 });
