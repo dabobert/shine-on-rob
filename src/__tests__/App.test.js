@@ -6,10 +6,25 @@ import Adapter from 'enzyme-adapter-react-16'
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 // import { spy } from 'sinon';
-import App from '../App';
+import App, { Wrapper } from '../App';
+import pry from 'pryjs'
+
+Enzyme.configure({ adapter: new Adapter() });
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
+});
+
+
+it('should handle the click event', () => {
+  window.alert = jest.fn();
+  const app = shallow(
+    <App />
+  );
+  app.requestData;
+  console.log({a: 1})
+  // app.simulate('click');
+  // expect(window.alert).toHaveBeenCalledWith('clicked');
 });
