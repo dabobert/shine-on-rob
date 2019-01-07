@@ -31,8 +31,6 @@ it('should understand handleClick event', () => {
 });
 
 
-
-
 it('should requestData and setStates', () => {
   // // other way to init fn
   // const spy = jest.spyOn(wrapper.instance(), 'handleClick'); // replace function via reference
@@ -40,7 +38,6 @@ it('should requestData and setStates', () => {
   // wrapper.update(); // forceUpdate()
   // wrapper.find('button').simulate('click'); // actually calls the spy function
 
-  const spy = jest.spyOn(App.prototype, 'handleClick');
   const app = mount(<App />);
 
 
@@ -50,19 +47,28 @@ it('should requestData and setStates', () => {
 
 
 
-  // console.log(Object.getOwnPropertyNames(app));
-  // console.log(Object.getOwnPropertyNames(app.instance()));
-  // console.log("--------")
-  // console.log(app.state());
-  // app.instance().handleClick();
-  // console.log(app.state());
+  console.log(Object.getOwnPropertyNames(app));
+  console.log(Object.getOwnPropertyNames(app.instance()));
+  console.log("--------")
+  console.log(app.state());
+  app.instance().handleClick();
+  console.log(app.state());
   // // app.simulate('click');
+
+  console.log(app.find("input"))
 
 
   // const app = shallow(<App />);
   app.find('button').simulate('click', 'using prototype');
   expect(spy).toHaveBeenCalled();
 
+
+
+    app.find("input").simulate("change", {
+      target: { value: "hello" }
+    });
+
+    expect(wrapper.find("input").props().value).toEqual("hello");
 
 
 
